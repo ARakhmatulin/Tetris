@@ -19,13 +19,13 @@ public class blockScript : MonoBehaviour {
 	private int Y_pos;
 
 	//
-	private Transform[] Bricks;
+	private Transform[] Bricks = new Transform[4];
 	private int Rotor;
 
 	// Use this for initialization
 	void Awake () {
-		X = Random.Range(0,10);
-		Y = 20;
+		X_pos = Random.Range(0,10);
+		Y_pos = 20;
 		createBricks();
 	}
 	
@@ -43,8 +43,7 @@ public class blockScript : MonoBehaviour {
 
 	void createBricks(){
 
-		int size = 4;
-		Vector3[] bricksPositions() = getBricksPositions();
+		Vector3[] bricksPositions = getBricksPositions();
 		
 		Bricks[0] = Instantiate(Brick,bricksPositions[0],Quaternion.identity) as Transform;
 		Bricks[1] = Instantiate(Brick,bricksPositions[1],Quaternion.identity) as Transform;
@@ -69,52 +68,52 @@ public class blockScript : MonoBehaviour {
 
 		Vector3[] bricksPositions = new Vector3[4];
 
-		Vector3 pos_1;
-		Vector3 pos_0;
-		Vector3 pos_2;
-		Vector3 pos_3;
+		Vector3 pos_1 = Vector3.zero;
+		Vector3 pos_0 = Vector3.zero;
+		Vector3 pos_2 = Vector3.zero;
+		Vector3 pos_3 = Vector3.zero;
 
 		if(viewBlock == 0){ //J
-			pos_1 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos,transform.position.z));
-			pos_0 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos-1,Y_pos,transform.position.z));
-			pos_2 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos+1,transform.position.z));
-			pos_3 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos+2,transform.position.z));			
+			pos_1 = new Vector3(X_pos,		Y_pos,transform.position.z);
+			pos_0 = new Vector3(X_pos-1,	Y_pos,transform.position.z);
+			pos_2 = new Vector3(X_pos,		Y_pos+1,transform.position.z);
+			pos_3 = new Vector3(X_pos,		Y_pos+2,transform.position.z);			
 		}
 		else if(viewBlock == 1){ //L
-			pos_1 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos,transform.position.z));
-			pos_0 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos+1,Y_pos,transform.position.z));
-			pos_2 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos+1,transform.position.z));
-			pos_3 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos+2,transform.position.z));			
+			pos_1 = new Vector3(X_pos,		Y_pos,transform.position.z);
+			pos_0 = new Vector3(X_pos+1,	Y_pos,transform.position.z);
+			pos_2 = new Vector3(X_pos,		Y_pos+1,transform.position.z);
+			pos_3 = new Vector3(X_pos,		Y_pos+2,transform.position.z);			
 		}
 		else if(viewBlock == 2){ //O
-			pos_1 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos,transform.position.z));
-			pos_0 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos+1,Y_pos,transform.position.z));
-			pos_2 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos+1,Y_pos+1,transform.position.z));
-			pos_3 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos+1,transform.position.z));			
+			pos_1 = new Vector3(X_pos,		Y_pos,transform.position.z);
+			pos_0 = new Vector3(X_pos+1,	Y_pos,transform.position.z);
+			pos_2 = new Vector3(X_pos+1,	Y_pos+1,transform.position.z);
+			pos_3 = new Vector3(X_pos,		Y_pos+1,transform.position.z);			
 		}
 		else if(viewBlock == 3){ //T
-			pos_1 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos,transform.position.z));
-			pos_0 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos+1,Y_pos,transform.position.z));
-			pos_2 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos-1,Y_pos,transform.position.z));
-			pos_3 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos-1,transform.position.z));			
+			pos_1 = new Vector3(X_pos,		Y_pos,transform.position.z);
+			pos_0 = new Vector3(X_pos+1,	Y_pos,transform.position.z);
+			pos_2 = new Vector3(X_pos-1,	Y_pos,transform.position.z);
+			pos_3 = new Vector3(X_pos,		Y_pos-1,transform.position.z);			
 		}
 		else if(viewBlock == 4){ //Z
-			pos_1 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos,transform.position.z));
-			pos_0 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos-1,transform.position.z));
-			pos_2 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos+1,Y_pos,transform.position.z));
-			pos_3 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos+1,Y_pos+1,transform.position.z));			
+			pos_1 = new Vector3(X_pos,		Y_pos,transform.position.z);
+			pos_0 = new Vector3(X_pos,		Y_pos-1,transform.position.z);
+			pos_2 = new Vector3(X_pos+1,	Y_pos,transform.position.z);
+			pos_3 = new Vector3(X_pos+1,	Y_pos+1,transform.position.z);			
 		}
 		else if(viewBlock == 5){ //S
-			pos_1 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos,transform.position.z));
-			pos_0 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos-1,transform.position.z));
-			pos_2 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos-1,Y_pos,transform.position.z));
-			pos_3 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos-1,Y_pos+1,transform.position.z));			
+			pos_1 = new Vector3(X_pos,		Y_pos,transform.position.z);
+			pos_0 = new Vector3(X_pos,		Y_pos-1,transform.position.z);
+			pos_2 = new Vector3(X_pos-1,	Y_pos,transform.position.z);
+			pos_3 = new Vector3(X_pos-1,	Y_pos+1,transform.position.z);			
 		}
 		else if(viewBlock == 6){ //I
-			pos_1 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos,transform.position.z));
-			pos_0 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos-1,transform.position.z));
-			pos_2 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos+1,transform.position.z));
-			pos_3 = Camera.main.ViewportToWorldPoint(new Vector3(X_pos,Y_pos+2,transform.position.z));			
+			pos_1 = new Vector3(X_pos,		Y_pos,transform.position.z);
+			pos_0 = new Vector3(X_pos,		Y_pos-1,transform.position.z);
+			pos_2 = new Vector3(X_pos,		Y_pos+1,transform.position.z);
+			pos_3 = new Vector3(X_pos,		Y_pos+2,transform.position.z);			
 		}
 		
 		bricksPositions[0] = pos_0;

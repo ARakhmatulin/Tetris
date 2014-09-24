@@ -16,7 +16,10 @@ public class GameScript : MonoBehaviour {
 	//
 	private float deltaTime;
 	private Transform Block;
-	
+
+	//
+	private Transform buf_block;
+
 	// Use this for initialization
 	void Start () {
 		CreateBlock();
@@ -38,28 +41,30 @@ public class GameScript : MonoBehaviour {
 		//viewBlock = 6 = I;
 		
 		int i = Random.Range(0,6);
+
+
 		if(i == 0){
-			Block = Instantiate(Block_J,new Vector3(0,0,0),Quaternion.identity) as Transform;
+			buf_block = Block_J;
 		}
 		else if(i == 1){
-			Block = Instantiate(Block_L,new Vector3(0,0,0),Quaternion.identity) as Transform;
+			buf_block = Block_L.transform;
 		}
 		else if(i == 2){
-			Block = Instantiate(Block_O,new Vector3(0,0,0),Quaternion.identity) as Transform;
+			buf_block = Block_O.transform;
 		}
 		else if(i == 3){
-			Block = Instantiate(Block_T,new Vector3(0,0,0),Quaternion.identity) as Transform;
+			buf_block = Block_T.transform;
 		}
 		else if(i == 4){
-			Block = Instantiate(Block_Z,new Vector3(0,0,0),Quaternion.identity) as Transform;
+			buf_block = Block_Z.transform;
 		}
 		else if(i == 5){
-			Block = Instantiate(Block_S,new Vector3(0,0,0),Quaternion.identity) as Transform;
+			buf_block = Block_S.transform;
 		}
 		else if(i == 6){
-			Block = Instantiate(Block_I,new Vector3(0,0,0),Quaternion.identity) as Transform;
+			buf_block = Block_I.transform;
 		}
-		
 
+		Block = Instantiate(buf_block,new Vector3(0,0,0),Quaternion.identity) as Transform;
 	}
 }
