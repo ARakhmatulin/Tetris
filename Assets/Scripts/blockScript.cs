@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class blockScript : MonoBehaviour {
+public class BlockScript : MonoBehaviour {
 
 	public KeyCode keyRotate = KeyCode.R;
+
+	public KeyCode keyUP = KeyCode.W;
+	public KeyCode keyLEFT = KeyCode.A;
+	public KeyCode keyDOWN = KeyCode.S;
+	public KeyCode keyRIGHT = KeyCode.D;
+
 	public Transform Brick;
 	public int viewBlock;
 	//viewBlock = 0 = J;
@@ -24,7 +30,7 @@ public class blockScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		X_pos = Random.Range(0,10);
+		X_pos = Random.Range(2,9);
 		Y_pos = 20;
 		createBricks();
 	}
@@ -39,6 +45,45 @@ public class blockScript : MonoBehaviour {
 			//rotate
 			rotateBlock();
 		}
+		if (Input.GetKeyDown(keyUP)){
+			MoveUp();
+		}
+		if (Input.GetKeyDown(keyDOWN)){
+			MoveDown();
+		}
+		if (Input.GetKeyDown(keyLEFT)){
+			MoveLeft();
+		}
+		if (Input.GetKeyDown(keyRIGHT)){
+			MoveRight();
+		}
+	}
+
+	public Transform[] getBricks(){
+		return Bricks;
+	}
+
+	public void Move(int X, int Y){
+		for (int i = 0; i<Bricks.Length;i++){
+			BrickScript _brick = Bricks[i].gameObject.GetComponent<BrickScript>();
+			_brick.Move(X,Y);
+		}
+	}
+
+	public void MoveDown(){
+		Move(0,-1);
+	}
+
+	public void MoveLeft(){
+		Move(-1,0);
+	}
+
+	public void MoveRight(){
+		Move(1,0);
+	}
+
+	public void MoveUp(){
+		Move(0,1);
 	}
 
 	void createBricks(){
