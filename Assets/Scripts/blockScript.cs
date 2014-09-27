@@ -3,13 +3,6 @@ using System.Collections;
 
 public class BlockScript : MonoBehaviour {
 
-	public KeyCode keyRotate = KeyCode.R;
-
-	public KeyCode keyUP = KeyCode.W;
-	public KeyCode keyLEFT = KeyCode.A;
-	public KeyCode keyDOWN = KeyCode.S;
-	public KeyCode keyRIGHT = KeyCode.D;
-
 	public Transform Brick;
 	public int viewBlock;
 	//viewBlock = 0 = J;
@@ -25,8 +18,10 @@ public class BlockScript : MonoBehaviour {
 	private int Y_pos;
 
 	//
-	private Transform[] Bricks = new Transform[4];
+	private Transform[] Bricks;
 	private int Rotor;
+
+	private bool validPosBricks = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -36,27 +31,11 @@ public class BlockScript : MonoBehaviour {
 	}
 	
 	void Start () {
-		//rot = transform.rotation;
+
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(keyRotate)){
-			//rotate
-			rotateBlock();
-		}
-		if (Input.GetKeyDown(keyUP)){
-			MoveUp();
-		}
-		if (Input.GetKeyDown(keyDOWN)){
-			MoveDown();
-		}
-		if (Input.GetKeyDown(keyLEFT)){
-			MoveLeft();
-		}
-		if (Input.GetKeyDown(keyRIGHT)){
-			MoveRight();
-		}
+		CheckPositionBricks();
 	}
 
 	public Transform[] getBricks(){
@@ -64,40 +43,38 @@ public class BlockScript : MonoBehaviour {
 	}
 
 	public void Move(int X, int Y){
+		if(validPosBricks == false){return;}
+
 		for (int i = 0; i<Bricks.Length;i++){
 			BrickScript _brick = Bricks[i].gameObject.GetComponent<BrickScript>();
 			_brick.Move(X,Y);
 		}
 	}
 
-	public void MoveDown(){
-		Move(0,-1);
-	}
-
-	public void MoveLeft(){
-		Move(-1,0);
-	}
-
-	public void MoveRight(){
-		Move(1,0);
-	}
-
-	public void MoveUp(){
-		Move(0,1);
+	void CheckPositionBricks(){
+		validPosBricks = true;
+//		for (int i = 0; i<Bricks.Length;i++){
+//			BrickScript _brick = Bricks[i].gameObject.GetComponent<BrickScript>();
+//			validPosBricks = _brick.validPos;
+//			//
+//			if(_brick.validPos == false){break;}
+//
+//		}
 	}
 
 	void createBricks(){
 
 		Vector3[] bricksPositions = getBricksPositions();
-		
-		Bricks[0] = Instantiate(Brick,bricksPositions[0],Quaternion.identity) as Transform;
-		Bricks[1] = Instantiate(Brick,bricksPositions[1],Quaternion.identity) as Transform;
-		Bricks[2] = Instantiate(Brick,bricksPositions[2],Quaternion.identity) as Transform;
-		Bricks[3] = Instantiate(Brick,bricksPositions[3],Quaternion.identity) as Transform;
+		int L = (int)bricksPositions.Length;
+		Bricks = new Transform[L];
+
+		for (int i = 0; i<Bricks.Length;i++){
+			Bricks[i] = Instantiate(Brick,bricksPositions[i],Quaternion.identity) as Transform;
+		}
 
 	}
 	
-	void rotateBlock(){
+	public void rotateBlock(){
 
 	}
 	

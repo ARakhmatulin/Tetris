@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameScript : MonoBehaviour {
 
-	public int timePeriod = 3;
+	public float timePeriod = 0.1f;
 
 	public Transform Block_O;
 	public Transform Block_J;
@@ -14,11 +14,18 @@ public class GameScript : MonoBehaviour {
 	public Transform Block_I;
 
 	//
-	public KeyCode startGame = KeyCode.N;
+	public KeyCode newBlock = KeyCode.N;
+	public KeyCode destryBlock = KeyCode.K;
 
+    public KeyCode keyRotate = KeyCode.R;
+
+    public KeyCode keyUP = KeyCode.W;
+    public KeyCode keyLEFT = KeyCode.A;
+    public KeyCode keyDOWN = KeyCode.S;
+    public KeyCode keyRIGHT = KeyCode.D;
 	//
-	private float deltaTime;
-	private Transform Block;
+	private float deltaTime = 0;
+	private Transform MainBlock;
 	private Transform[][] BricksOnTable;
 
 	//
@@ -36,24 +43,50 @@ public class GameScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		deltaTime = deltaTime + Time.deltaTime;
+
+		if(MainBlock != null){deltaTime = deltaTime + Time.deltaTime;}
+		else{deltaTime = 0;}
 
 		if(deltaTime >= timePeriod
-		   && Block != null){
-
-			//Block.moveDown();
+		   && MainBlock != null){
+			deltaTime = 0;
+			MoveDown();
 		}
 
-		if(Input.GetKeyDown(startGame)
-		   && Block == null){
+		if(Input.GetKeyDown(newBlock)
+		   && MainBlock == null){
 			CreateBlock();
 			deltaTime = 0;
 		}
+		if (Input.GetKeyDown(destryBlock)){DestroyBlock();}
+		if (Input.GetKeyDown(keyRotate)){RotateBlock();}
+        if (Input.GetKeyDown(keyUP)){MoveUp();}
+        if (Input.GetKeyDown(keyDOWN)){MoveDown();}
+        if (Input.GetKeyDown(keyLEFT)){MoveLeft();}
+        if (Input.GetKeyDown(keyRIGHT)){MoveRight();}
+	}
+
+	void RotateBlock(){
 	}
 
 	void DestroyBlock(){
-
+		if(MainBlock != null){Destroy(MainBlock.gameObject);}
 	}
+
+	//////////////////
+	/// MOVING
+	void Move(int X, int Y){
+		if(MainBlock == null){return;}
+		
+		BlockScript bScript = MainBlock.gameObject.GetComponent<BlockScript>();
+		bScript.Move(X,Y);
+	}
+	
+	void MoveDown(){Move(0,-1);}
+	void MoveLeft(){Move(-1,0);}
+	void MoveRight(){Move(1,0);}
+	void MoveUp(){Move(0,1);}
+	//////////////////
 
 	void CreateBlock(){
 		//viewBlock = 0 = J;
@@ -89,6 +122,6 @@ public class GameScript : MonoBehaviour {
 			buf_block = Block_I.transform;
 		}
 
-		Block = (Transform)Instantiate(buf_block,new Vector3(0,0,0),Quaternion.identity);
+		MainBlock = (Transform)Instantiate(buf_block,new Vector3(0,0,0),Quaternion.identity);
 	}
 }
