@@ -30,7 +30,7 @@ public class BrickScript : MonoBehaviour {
 
 		float z = transform.position.z;
 
-		pos_x = Mathf.Abs(transform.position.x - pos_x)>=2?pos_x:pos_x + X ;
+		pos_x = Mathf.Abs(Mathf.Abs(transform.position.x) - Mathf.Abs(pos_x))>=2?pos_x:pos_x + X ;
 		pos_y = pos_y + Y;
 
 		//new position
